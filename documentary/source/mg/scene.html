@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>MG scene</title>
+<link rel="stylesheet" href="engine/fonts/fonts.css">
+<link rel="stylesheet" href="engine/lib.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="1920" height="1080"></canvas>
+  <div id="root"></div>
+  <canvas id="fx" width="1920" height="1080"></canvas>
+  <div id="vig"></div>
+  <canvas id="grain" width="960" height="540"></canvas>
+</div>
+<script src="engine/lib.js"></script>
+<script>
+  const __q=new URLSearchParams(location.search), __sid=__q.get('s');
+  const __need=(__q.get('data')||'').split(',').filter(Boolean);
+  const __load=src=>new Promise(r=>{const s=document.createElement('script');s.src=src;s.onload=r;document.body.appendChild(s)});
+  (async()=>{for(const d of __need)await __load('data/'+d+'.js');await __load('scenes/'+__sid+'.js');boot()})();
+</script>
+</body>
+</html>
