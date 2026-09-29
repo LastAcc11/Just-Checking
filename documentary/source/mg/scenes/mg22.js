@@ -3,7 +3,7 @@
 const S0=229.70;
 const IL={lon:34.87,lat:32.0},MOR={lon:-6.8,lat:34.0};
 const V1={lon:IL.lon,lat:IL.lat,ax:1250,ay:560,span:22},V2={lon:14,lat:33.5,ax:960,ay:600,span:58};
-let c1,c2,c3,c4,c5,unk;
+let c1,c2,c3,c4,c5,unk,av;
 const SCENE={dur:12.4,fadeIn:.25,
 build(){
   c1=el('div','chip','אוקטובר 2018<small>לפי הדיווחים: יציאה לטיפול שיניים</small>');c1.style.fontSize='46px';
@@ -11,6 +11,7 @@ build(){
   c2=el('div','abs he','המסלול המדויק לא הוכרע');Object.assign(c2.style,{fontWeight:400,fontSize:'28px',color:'#9aa3ab',width:'420px',textAlign:'center'});
   c3=el('div','chip','2019 · נעצר במרוקו<small>3 שנות מאסר: זיוף ומרמה</small>');c3.style.fontSize='46px';
   c4=el('div','chip','אוגוסט 2022<small>גורש לישראל</small>');c4.style.fontSize='46px';
+  av=el('div','abs','<img src="photos/avitan.jpg" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:grayscale(.3)">');Object.assign(av.style,{width:'104px',height:'104px',borderRadius:'50%',overflow:'hidden',border:'4px solid #efe8da',boxShadow:'0 10px 30px rgba(0,0,0,.7),0 0 0 6px rgba(226,55,44,.35)'});
   c5=el('div','stamp','נעצר בנחיתה');c5.style.fontSize='64px';
 },
 update(t){const T=t+S0;
@@ -28,7 +29,9 @@ update(t){const T=t+S0;
   place(c3,mo[0]-120,mo[1]+60);reveal(c3,eOut(seg(T,233.3,233.8)),{dy:12,wipe:'none'});
   const sub=c3.querySelector('small');sub.style.opacity=clamp(seg(T,235.2,235.6));
   // deportation back (solid, lower arc)
-  if(T>238.6){drawArc(FX,mo,il,eIO(seg(T,238.65,240.3)),{lift:-.12,width:4})}
+  let pm2=null;if(T>238.6){pm2=drawArc(FX,mo,il,eIO(seg(T,238.65,240.3)),{lift:-.12,width:4})}
+  let ap=il;if(T>231.8)ap=pm||il;if(T>233.3)ap=mo;if(T>238.65)ap=pm2||mo;
+  place(av,ap[0]-52,ap[1]-150);av.style.opacity=clamp(seg(T,229.9,230.3))*(1-eIO(seg(T,241.0,241.6)));
   place(c4,il[0]-470,il[1]+60);reveal(c4,eOut(seg(T,238.8,239.3)),{dy:12,wipe:'none'});
   place(c5,il[0]-520,il[1]+200);slam(c5,seg(T,240.6,240.95),-6);
 }};

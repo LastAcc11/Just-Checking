@@ -5,7 +5,7 @@ let cd,kick,house,ank,l1,l2;
 const SCENE={dur:6.75,fadeIn:.25,
 build(){
   kick=el('div','abs kicker','<span>פרשה 512 · נאשם</span><i></i>');Object.assign(kick.style,{right:'240px',top:'110px'});
-  cd=card({name:'גולן אביטן',role:'מהנאשמים המרכזיים בפרשה',x:1100,y:160,w:560,ph:520,sil:410});
+  cd=card({name:'גולן אביטן',role:'מהנאשמים המרכזיים בפרשה',x:1100,y:160,w:560,ph:520,sil:410,img:'photos/avitan.jpg',pos:'50% 30%'});
   house=el('div','abs',icon('house',230,'#efe8da'));place(house,360,250);
   ank=el('div','abs',icon('anklet',150,'#efe8da'));place(ank,400,560);
   l1=el('div','abs he','מעצר בית');Object.assign(l1.style,{left:'240px',width:'480px',textAlign:'center',top:'490px',fontWeight:900,fontSize:'54px',color:'#efe8da'});
