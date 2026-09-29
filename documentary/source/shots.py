@@ -45,6 +45,7 @@ SHOTS = [
    'links': [L("ynet: ״אין סיכוי שאחזור לפשע״, הריאיון מ־1994 (עם וידאו)", "https://www.ynet.co.il/articles/0,7340,L-5432416,00.html"),
              L("N12, 2021: דן שילון חוזר לריאיון עם אברג׳יל", "https://www.mako.co.il/news-law/2021_q4/Article-4026eef71792d71027.htm")],
    'note': "בטלוויזיה יש מסך ירוק נקי: מקי (Chroma Key) ומניחים מתחת את קטע הריאיון האמיתי."}),
+ (34.60, 42.18, 'MG', 'rl04', "(חלופה לשוטי AI-03 ו־AI-04) תמונות מהריאיון ב״המעגל״", {'note': "תמונות הריאיון שסיפקת, ב־Polaroid עם כיתוב. אפשר להשתמש בהן במקום שוטי ה־AI או בנוסף להם."}),
  (54.00, 57.70, 'AI', 'AI-05', "שנים אחר כך, על דוכן העדים, הוא נותן לראיון הסבר נוסף:", {
    'img': "Witness stand in an Israeli district courtroom around 2019: a faceless man in a dark suit and open-collar shirt seated in the wooden witness box with a microphone, a glass partition beside him, lawyers' desks with binders and laptops in the soft-focus foreground, cold fluorescent light.",
    'vid': "Slow lateral dolly from left to right past the lawyers' desks. The man at the witness stand makes a small hand gesture as if explaining. Everything else stays still.",
@@ -94,13 +95,14 @@ SHOTS = [
    'vid': "Slow tracking shot. The officers walk the man slowly toward the car. Camera flashes pop in the background. Emergency lights pulse. No sudden movements.",
    'note': ""}),
  (160.80, 168.00, 'MG', 'mg15', "החקירה שקדמה למעצר נמשכה שנים… רשויות מיותר מעשר מדינות.", {}),
- (168.05, 169.60, 'AI', 'AI-10', "ב־2011 הוא הוסגר.", {
+ (168.05, 169.60, 'AI', 'AI-10', "(חלופת AI לצילום הארכיון) ב־2011 הוא הוסגר.", {
    'img': "An airport tarmac at night in January 2011: a small white government jet with its airstair open, floodlights, a faceless man in handcuffs flanked by faceless federal agents in plain dark windbreakers (no lettering) walking toward the stairs.",
    'vid': "Wide static shot. The group walks slowly toward the stairs. Heat haze shimmers behind the engines. The floodlights flare softly.",
    'note': "חלופה: צילום אמיתי מההסגרה (קישורים בשורה הבאה)."}),
- (168.05, 169.60, 'REAL', 'REAL-05', "(חלופה לשוט AI-10)", {
+ (168.05, 169.60, 'MG', 'rl02', "ב־2011 הוא הוסגר.", {
    'links': [L("הארץ, 12.1.2011: האחים אברג׳יל המריאו לקראת הסגרתם", "https://www.haaretz.co.il/news/law/2011-01-12/ty-article/0000017f-e874-df5f-a17f-fbfe78b30000"),
-             L("ynet: ההסגרה הגדולה: האברג׳ילים המריאו", "https://www.ynet.co.il/articles/0,7340,L-4012598,00.html")]}),
+             L("ynet: ההסגרה הגדולה: האברג׳ילים המריאו", "https://www.ynet.co.il/articles/0,7340,L-4012598,00.html")],
+   'note': "מרונדר עם צילום ההסגרה שסיפקת. שם הקובץ אצלך מציין שזה מאיר אברג׳יל, ולכן הכיתוב כך."}),
  (169.62, 175.60, 'AI', 'AI-11', "במאי 2012 עמד יצחק אברג׳יל בבית משפט פדרלי בלוס אנג׳לס והודה…", {
    'img': "A US federal courtroom in Los Angeles in 2012: wood-paneled walls, an American flag beside the judge's bench, a faceless judge in a black robe, a faceless defendant in a tan prison jumpsuit standing at the lectern next to his faceless lawyer in a grey suit. Seen from behind the defendant.",
    'vid': "Slow push-in from behind the defendant toward the judge. The defendant nods slightly once. The judge stays still.",
@@ -143,7 +145,7 @@ SHOTS = [
              L("פסק הדין בערעור, בית המשפט העליון (PDF)", "https://supremedecisions.court.gov.il/Home/Download?path=NetVerdicts/2024/11/10/2022-0-5136-48-2&fileName=f7c750a35a4d4ab4a798b2aabe1259d6&type=2")]}),
  (286.40, 297.25, 'MG', 'mg26', "מאיר, האח הבכור, הלך בדרך אחרת… שמונה וחצי שנות מאסר.", {
    'links': [L("כאן: מאיר אברג׳יל נידון ל־8.5 שנות מאסר", "https://www.kan.org.il/content/kan-news/law/241865/")]}),
- (297.32, 302.60, 'REAL', 'REAL-08', "ב־2021 השתחרר, וסיפר שניתק את הקשר עם בני המשפחה שמעורבים בפשע.", {
+ (297.32, 302.70, 'MG', 'rl03', "ב־2021 השתחרר, וסיפר שניתק את הקשר עם בני המשפחה שמעורבים בפשע.", {
    'links': [L("הארץ, 17.6.2021: מאיר אברג׳יל שוחרר מהכלא", "https://www.haaretz.co.il/news/law/2021-06-17/ty-article/0000017f-e2eb-d38f-a57f-e6fb07940000"),
              L("ynet: העבריין מאיר אברג׳יל שוחרר מהכלא", "https://www.ynet.co.il/news/article/BJY1M000i00"),
              L("כאן: מאיר אברג׳יל שוחרר (״רוצה לנוח״)", "https://www.kan.org.il/content/kan-news/local/275643/"),

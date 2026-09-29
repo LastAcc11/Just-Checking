@@ -15,7 +15,7 @@ build(){
   lbl=el('div','abs kicker','<span>היעד</span><i></i>');place(lbl,0,0);Object.assign(lbl.style,{right:(1920-CARD.x-600)+'px',left:'auto',top:(CARD.y-50)+'px'});
   CH.forEach(([n,y])=>{const c=el('div','chip',`${n}<small>עובר/ת אורח</small>`);c.innerHTML=`${n}<small>אזרח · 11.12.2003</small>`;Object.assign(c.style,{right:'1180px',top:(y+130)+'px',fontSize:'58px',padding:'10px 28px 14px'});c.querySelector('small').style.fontSize='24px';chips.push(c);
     const x=el('div','abs he',`✕ &nbsp;לא המטרה`);Object.assign(x.style,{right:'1180px',top:(y+262)+'px',fontSize:'28px',fontWeight:800,color:'#9aa3ab',letterSpacing:'2px'});crosses.push(x)});
-  cd=card({name:'זאב רוזנשטיין',role:'מהדמויות הבולטות<br>בעולם התחתון בישראל',id:'FILE 03-12',x:CARD.x,y:CARD.y,w:600,ph:560,sil:430});cd.querySelector('.nm').style.fontSize='64px';cd.querySelector('.rl').style.fontSize='30px';
+  cd=card({name:'זאב רוזנשטיין',role:'מהדמויות הבולטות<br>בעולם התחתון בישראל',id:'FILE 03-12',x:CARD.x,y:CARD.y,w:600,ph:560,sil:430,img:'photos/rosenstein_court.jpg',pos:'50% 25%'});cd.querySelector('.nm').style.fontSize='64px';cd.querySelector('.rl').style.fontSize='30px';
   st1=el('div','stamp','נפצע');place(st1,CARD.x-260,CARD.y+430);st1.style.fontSize='70px';
   st2=el('div','stamp','שרד');place(st2,CARD.x-200,CARD.y+590);st2.style.fontSize='84px';
 },

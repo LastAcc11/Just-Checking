@@ -4,7 +4,7 @@ let kick,cd,st;
 const SCENE={dur:2.65,fadeIn:.2,
 build(){
   kick=el('div','abs kicker','<span>רחובות · יוני 2002</span><i></i>');Object.assign(kick.style,{right:'640px',top:'110px'});
-  cd=card({name:'יעקב אברג׳יל',role:'נרצח ליד ביתו',x:700,y:160,w:520,ph:480,sil:380});
+  cd=card({name:'יעקב אברג׳יל',role:'נרצח ליד ביתו',x:700,y:160,w:520,ph:480,sil:380,img:'photos/yaakov_old.jpg',pos:'50% 40%'});
   st=el('div','stamp','לא פוענח');place(st,520,560);st.style.fontSize='96px';
 },
 update(t){const T=t+S0;

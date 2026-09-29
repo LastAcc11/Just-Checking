@@ -5,8 +5,8 @@ let kick,cA,cR,l1,l2,chips=[];
 const SCENE={dur:6.32,fadeIn:.25,
 build(){
   kick=el('div','abs kicker','<i></i><span>לפי עדות של עד מדינה</span><i></i>');Object.assign(kick.style,{left:0,right:0,top:'80px',justifyContent:'center',fontSize:'30px'});
-  cA=card({name:'יצחק אברג׳יל',role:'',x:1260,y:190,w:440,ph:470,sil:360,img:'photos/abergil_card.jpg'});
-  cR=card({name:'זאב רוזנשטיין',role:'',x:220,y:190,w:440,ph:470,sil:360});
+  cA=card({name:'יצחק אברג׳יל',role:'',x:1260,y:190,w:440,ph:470,sil:360,img:'photos/yitzhak_hoodie.jpg',pos:'50% 22%'});
+  cR=card({name:'זאב רוזנשטיין',role:'',x:220,y:190,w:440,ph:470,sil:360,img:'photos/rosenstein_brown.jpg',pos:'50% 25%'});
   l1=el('div','abs he','רצון להרוג');Object.assign(l1.style,{left:'700px',width:'520px',textAlign:'center',top:'330px',fontWeight:900,fontSize:'56px',color:'#e2372c'});
   l2=el('div','abs he','ולהשתלט על בתי הקזינו');Object.assign(l2.style,{left:'700px',width:'520px',textAlign:'center',top:'610px',fontWeight:800,fontSize:'44px',color:'#efe8da'});
   for(let i=0;i<5;i++){const c=el('div','abs',icon('chip',54,i%2?'#e2372c':'#efe8da'));chips.push(c)}

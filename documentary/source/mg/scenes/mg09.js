@@ -9,9 +9,9 @@ build(){
   parents=el('div','abs',`<span style="display:inline-flex;gap:16px">${person(84,'#8b949c')}${person(84,'#8b949c')}</span>`);place(parents,960-92,215);
   for(let i=0;i<10;i++){const k=el('div','abs',person(80,'#8b949c'));place(k,KX(i)-40,420);kids.push(k)}
   note=el('div','abs he','לא כל בניה היו חלק מעולם הפשע');Object.assign(note.style,{left:0,right:0,top:'560px',textAlign:'center',fontWeight:400,fontSize:'40px',color:'#9aa3ab'});
-  cM=card({name:'מאיר',role:'האח הבכור',x:1180,y:560,w:330,ph:250,sil:200});
-  cY=card({name:'יעקב',role:'אח',x:795,y:560,w:330,ph:250,sil:200});
-  cI=card({name:'יצחק',role:'הצעיר',x:410,y:560,w:330,ph:250,sil:200,img:'photos/abergil_card.jpg'});
+  cM=card({name:'מאיר',role:'האח הבכור',x:1180,y:560,w:330,ph:250,sil:200,img:'photos/meir_released.jpg',pos:'50% 20%'});
+  cY=card({name:'יעקב',role:'אח',x:795,y:560,w:330,ph:250,sil:200,img:'photos/yaakov_old.jpg',pos:'50% 40%'});
+  cI=card({name:'יצחק',role:'הצעיר',x:410,y:560,w:330,ph:250,sil:200,img:'photos/yitzhak_hoodie.jpg',pos:'50% 22%'});
 },
 update(t){const T=t+S0;
   reveal(ttl,eOut(seg(T,86.15,86.7)),{dy:24});

@@ -5,7 +5,7 @@ let cd,fork1,fork2,kick,rows=[],yr,num,numl;
 const R=[['קשירת קשר',291.1],['עבירות סמים',292.45],['הלבנת הון',293.4]];
 const SCENE={dur:10.85,fadeIn:.25,
 build(){
-  cd=card({name:'מאיר אברג׳יל',role:'האח הבכור',x:1240,y:160,w:500,ph:480,sil:380});
+  cd=card({name:'מאיר אברג׳יל',role:'האח הבכור',x:1240,y:160,w:500,ph:480,sil:380,img:'photos/meir_court.jpg',pos:'50% 25%'});
   fork1=el('div','abs he','יצחק');fork2=el('div','abs he','מאיר');
   [fork1,fork2].forEach(e=>Object.assign(e.style,{fontWeight:900,fontSize:'40px',color:'#efe8da'}));
   kick=el('div','abs kicker','<span>2018 · הסדר טיעון</span><i></i>');Object.assign(kick.style,{right:'780px',top:'190px',fontSize:'34px'});
