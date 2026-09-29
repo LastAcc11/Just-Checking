@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<link rel="stylesheet" href="engine/fonts/fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden;background:#3b2415}
+#st{position:relative;width:1280px;height:720px;overflow:hidden}
+canvas{position:absolute;inset:0}
+.it{position:absolute;box-shadow:0 14px 28px rgba(0,0,0,.55),0 3px 6px rgba(0,0,0,.4)}
+.pin{position:absolute;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a7a,#d0190f 55%,#7a0a05);box-shadow:0 4px 6px rgba(0,0,0,.6);z-index:5}
+.photo{background:#f3efe6;padding:10px 10px 12px}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+#portrait{left:420px;top:40px;width:440px;height:520px;transform:rotate(-1.8deg);background:#f5f1e8;padding:14px 14px 14px;clip-path:polygon(0 2%,6% 0,20% 1.5%,40% 0,62% 1%,80% 0,100% 1.5%,99% 30%,100% 60%,98.5% 100%,70% 98.5%,45% 100%,20% 98.8%,0 100%,1% 70%,0 40%)}
+#portrait img{width:100%;height:100%;object-fit:cover;object-position:62% 30%;filter:contrast(1.15) saturate(1.1) brightness(.98)}
+#banner{left:430px;top:512px;width:420px;height:150px;background:linear-gradient(180deg,#e0231a,#b3120b);transform:rotate(-1.8deg);display:flex;align-items:center;justify-content:center;z-index:4;box-shadow:0 16px 30px rgba(0,0,0,.6)}
+#banner span{font-family:'Heebo';font-weight:900;font-size:132px;line-height:1;color:#fff;letter-spacing:2px;margin-top:-6px;text-shadow:0 4px 0 rgba(0,0,0,.25)}
+#badge{left:70px;top:36px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,#2a58a8 0,#1c3f82 62%,#e9e6dc 63%,#e9e6dc 70%,#1c3f82 71%);transform:rotate(-8deg);display:flex;align-items:center;justify-content:center}
+#badge svg{width:120px;height:120px}
+#map{left:40px;top:258px;width:330px;height:230px;transform:rotate(3deg)}
+#blast{left:70px;top:505px;width:300px;height:200px;transform:rotate(-4deg)}
+#blast img{filter:grayscale(1) contrast(1.25)}
+#news{left:935px;top:30px;width:300px;height:230px;background:#e8dcc0;transform:rotate(5deg);padding:16px 18px;font-family:'Frank Ruhl Libre';color:#241d14}
+#news .h{font-weight:900;font-size:40px;line-height:1.02}
+#news .l{height:7px;background:rgba(36,29,20,.35);margin-top:9px;filter:blur(1.2px)}
+#chips{position:absolute;left:965px;top:285px;width:260px;height:200px}
+#doc{left:925px;top:495px;width:300px;height:220px;background:#f1ede4;transform:rotate(-5deg);padding:18px 20px;font-family:'Heebo';color:#1f1d1a}
+#doc .t{font-weight:900;font-size:34px}
+#doc .l{height:6px;background:rgba(30,28,25,.28);margin-top:10px;filter:blur(.8px)}
+#stamp{position:absolute;left:30px;bottom:26px;border:6px solid #c8150d;color:#c8150d;font-family:'Heebo';font-weight:900;font-size:48px;padding:0 16px;transform:rotate(-12deg);opacity:.9}
+#flag{position:absolute;left:14px;top:14px;width:54px;height:38px;background:#fff;border:1px solid #ccc}
+#flag:before,#flag:after{content:'';position:absolute;left:0;right:0;height:5px;background:#1f4fb5}
+#flag:before{top:4px}#flag:after{bottom:4px}
+#flag i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-style:normal;color:#1f4fb5;font-size:20px;line-height:1}
+#tape{left:-40px;top:668px;width:560px;height:46px;background:repeating-linear-gradient(135deg,#f4c914 0 38px,#151515 38px 76px);transform:rotate(-6deg);opacity:.95;z-index:6}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.72) 100%);pointer-events:none;z-index:8}
+#glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,120,60,.18),rgba(0,0,0,0) 55%);z-index:7;pointer-events:none}
+</style></head><body>
+<div id="st">
+  <canvas id="cork" width="1280" height="720"></canvas>
+  <canvas id="str" width="1280" height="720"></canvas>
+  <div class="it photo" id="map"><img src="photos/thumb_map.jpg"></div>
+  <div class="it photo" id="blast"><img src="photos/scene_13.jpg"></div>
+  <div class="it" id="badge"><svg viewBox="0 0 100 100"><polygon points="50,6 61,38 95,38 67,58 78,92 50,71 22,92 33,58 5,38 39,38" fill="#e9c75a" stroke="#fff3c4" stroke-width="2"/><circle cx="50" cy="52" r="13" fill="#1c3f82"/><path d="M50 43l7 12h-14zM50 61l-7-12h14z" fill="none" stroke="#e9c75a" stroke-width="2.4"/></svg></div>
+  <div class="it" id="news"><div class="h">3 הרוגים בפיצוץ בלב תל אביב</div><div class="l"></div><div class="l" style="width:85%"></div><div class="l"></div><div class="l" style="width:70%"></div><div class="l"></div><div class="l" style="width:60%"></div></div>
+  <div id="chips"></div>
+  <div class="it" id="doc"><div class="t">כתב אישום</div><div class="l"></div><div class="l" style="width:80%"></div><div class="l"></div><div class="l" style="width:65%"></div><div class="l"></div><div id="stamp">512</div><div id="flag"><i>✡</i></div></div>
+  <div class="it" id="portrait"><img src="photos/thumb_subject.jpg"></div>
+  <div class="it" id="banner"><span>מבוקש</span></div>
+  <div class="it" id="tape"></div>
+  
+  <div id="glow"></div><div id="vig"></div>
+</div>
+<script>
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+// cork texture
+const c=document.getElementById('cork').getContext('2d'),R=rng(7);
+c.fillStyle='#8a5a33';c.fillRect(0,0,1280,720);
+for(let i=0;i<60000;i++){const x=R()*1280,y=R()*720,r=R()*2.4+.4,v=R();c.fillStyle=v<.5?`rgba(60,32,14,${.25+R()*.35})`:`rgba(196,142,88,${.2+R()*.3})`;c.beginPath();c.arc(x,y,r,0,7);c.fill()}
+const g=c.createRadialGradient(640,330,100,640,360,800);g.addColorStop(0,'rgba(255,190,120,.15)');g.addColorStop(1,'rgba(20,8,2,.55)');c.fillStyle=g;c.fillRect(0,0,1280,720);
+// chips + card
+const ch=document.getElementById('chips');
+[[40,70,'#c8150d'],[95,40,'#111'],[150,78,'#1f4fb5'],[70,120,'#e6e0d0'],[130,125,'#c8150d']].forEach(([x,y,col])=>{const d=document.createElement('div');Object.assign(d.style,{position:'absolute',left:x+'px',top:y+'px',width:'74px',height:'74px',borderRadius:'50%',background:`repeating-conic-gradient(${col} 0 20deg,#f4f1ea 20deg 30deg)`,boxShadow:'0 6px 10px rgba(0,0,0,.55)',border:'3px solid rgba(0,0,0,.2)'});
+  const inn=document.createElement('div');Object.assign(inn.style,{position:'absolute',inset:'14px',borderRadius:'50%',background:col,border:'2px dashed rgba(255,255,255,.7)'});d.appendChild(inn);ch.appendChild(d)});
+const card=document.createElement('div');Object.assign(card.style,{position:'absolute',left:'170px',top:'10px',width:'92px',height:'128px',background:'#fbfaf6',borderRadius:'8px',transform:'rotate(14deg)',boxShadow:'0 8px 14px rgba(0,0,0,.5)',fontFamily:'Oswald',color:'#c8150d',fontSize:'40px',fontWeight:'700',padding:'4px 10px'});card.innerHTML='A<div style="font-size:54px;text-align:center;margin-top:-6px">♦</div>';ch.appendChild(card);
+// pins + strings
+const pins=[[640,56],[165,48],[205,270],[220,515],[1085,40],[1095,300],[1075,505]];
+const s=document.getElementById('str').getContext('2d');
+pins.slice(1).forEach(([x,y])=>{s.strokeStyle='#d0190f';s.lineWidth=3.2;s.shadowColor='rgba(0,0,0,.55)';s.shadowBlur=4;s.shadowOffsetY=3;s.beginPath();s.moveTo(x,y);const mx=(x+640)/2,my=(y+56)/2+18;s.quadraticCurveTo(mx,my,640,56);s.stroke()});
+pins.forEach(([x,y])=>{const p=document.createElement('div');p.className='pin';p.style.left=(x-11)+'px';p.style.top=(y-11)+'px';document.getElementById('st').appendChild(p)});
+window.ready=document.fonts.ready.then(()=>new Promise(r=>setTimeout(r,300)));
+</script></body></html>
