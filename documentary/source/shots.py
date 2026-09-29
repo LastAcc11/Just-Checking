@@ -21,12 +21,12 @@ SHOTS = [
    'img': "The same Tel Aviv street in December 2003 seen from across the road, the small currency-exchange storefront in the middle ground, parked cars in front, no people close to the camera. Midday light. Wide static shot.",
    'vid': "Static camera. After half a second a sudden bright white-orange flash bursts from the roof of the small shop, a shockwave ripples outward, dust and paper debris blow into the air, the camera shakes hard and the frame washes to white. No people are shown being hurt.",
    'note': "שנייה אחת בלבד. אפשר לקצר לפלאש לבן וסאונד בעריכה."}),
- (9.22, 11.90, 'REAL', 'REAL-01', "מטען נפץ מתפוצץ בלב העיר. עשרות אנשים נפצעים,", {
+ (9.22, 11.90, 'MG', 'rl01', "מטען נפץ מתפוצץ בלב העיר. עשרות אנשים נפצעים,", {
    'links': [L("וואלה, 11.12.2003: 3 הרוגים וכ־30 פצועים בניסיון חיסול של זאב רוזנשטיין", "https://news.walla.co.il/item/477467"),
              L("הארץ, 2003: 3 הרוגים בניסיון התנקשות ברוזנשטיין", "https://www.haaretz.co.il/misc/2003-12-10/ty-article/0000017f-f2cb-d223-a97f-ffdfed120000"),
              L("TheMarker, 11.12.2003: 3 הרוגים ולפחות 30 פצועים בפיצוץ בתל אביב", "https://www.themarker.com/misc/2003-12-11/ty-article/0000017f-e369-d9aa-afff-fb7958fc0000"),
              L("חדשות 13: 6 ניסיונות חיסול אכזריים בעולם הפשע (כולל ארכיון)", "https://13tv.co.il/item/shows/patrick/season-01/articles/jfxcs-904340735/")],
-   'note': "צילומי זירה מהיום עצמו: שוטרים, הרס, רכבים. להשתמש בתמונות בלי פצועים מזוהים."}),
+   'note': "מרונדר עם התמונות ששלחת מהזירה. חתכתי את התמונה מלמעלה כך שלא רואים את מה שמתחת לסדין."}),
  (11.90, 20.30, 'MG', 'mg02', "ושלושה נהרגים: נפתלי מגד, רחמים צרויה ומשה מזרחי. שלושה אזרחים חפים מפשע…", {}),
  (20.30, 28.30, 'MG', 'mg03', "הם לא היו המטרה. המטרה הייתה זאב רוזנשטיין… הוא אמנם נפצע, אך שרד.", {
    'links': [L("תמונות של רוזנשטיין לכרטיס (חדשות 13, דף תגית)", "https://13tv.co.il/tags/zeev-rozenstein/"),

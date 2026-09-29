@@ -49,8 +49,8 @@ function person(size=60,color='#9aa3ab'){return `<svg width="${size}" height="${
 
 // dossier card
 let cardN=0;
-function card({name,role='',id='',x=0,y=0,w=420,ph=430,sil=330}){
-  cardN++;const c=el('div','card',`<div class="ph" style="height:${ph}px">${silhouette(sil,{id:'sg'+cardN})}<i class="corner c1"></i><i class="corner c2"></i><i class="corner c3"></i><i class="corner c4"></i><span class="phid">${id}</span></div>
+function card({name,role='',id='',x=0,y=0,w=420,ph=430,sil=330,img=null,pos='50% 30%'}){
+  cardN++;const c=el('div','card',`<div class="ph" style="height:${ph}px">${img?`<img src="${img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${pos};filter:grayscale(.55) contrast(1.12) brightness(.92)">`:silhouette(sil,{id:'sg'+cardN})}<i class="corner c1"></i><i class="corner c2"></i><i class="corner c3"></i><i class="corner c4"></i><span class="phid">${id}</span></div>
   <div class="nm">${name}</div><div class="bar"></div><div class="rl">${role}</div>`);
   c.style.width=w+'px';place(c,x,y);return c}
 
