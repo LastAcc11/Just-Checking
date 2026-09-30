@@ -1,0 +1,10 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><link rel="stylesheet" href="engine/fonts/fonts.css">
+<style>html,body{margin:0;width:1920px;height:1080px;background:#0b0d10;overflow:hidden}
+.b{position:absolute;inset:60px;border:2px dashed rgba(239,232,218,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;font-family:Heebo;color:#efe8da;text-align:center}
+.t{font-weight:800;font-size:40px;letter-spacing:6px;padding:8px 26px;border:3px solid currentColor}
+.id{font-family:Oswald;font-size:140px;line-height:1;font-weight:700}
+.n{font-size:40px;max-width:1500px;color:#9aa3ab;line-height:1.4}
+.ai{color:#7fb0dc}.real{color:#d9a441}</style></head><body>
+<div class="b"><div class="t" id="t"></div><div class="id" id="i"></div><div class="n" id="n"></div></div>
+<script>const q=new URLSearchParams(location.search);const ty=q.get('ty');
+t.textContent=ty==='AI'?'שוט AI':'צילום אמיתי';t.className='t '+(ty==='AI'?'ai':'real');i.textContent=q.get('id');n.textContent=q.get('n');</script></body></html>

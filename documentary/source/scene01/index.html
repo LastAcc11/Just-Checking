@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Scene 01 - Tel Aviv 2003</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root{
+    --ink:#efe8da; --ink-dim:#9aa3ab; --red:#e2372c; --red-glow:rgba(226,55,44,.55);
+    --panel:rgba(10,13,17,.72);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;background:#07090c;overflow:hidden}
+  #stage{position:relative;width:1920px;height:1080px;overflow:hidden}
+  canvas{position:absolute;inset:0}
+  #grain{mix-blend-mode:overlay;opacity:.42}
+  .abs{position:absolute}
+
+  /* pin label */
+  #pinLabel{font-family:'Heebo';font-weight:900;font-size:46px;color:var(--ink);
+    letter-spacing:.5px;white-space:nowrap;text-shadow:0 2px 18px rgba(0,0,0,.9)}
+  #pinLabel small{display:block;font-weight:400;font-size:20px;color:var(--ink-dim);letter-spacing:3px;margin-top:-4px}
+
+  /* info panel (right side) */
+  #panel{right:110px;top:300px;width:780px;text-align:right}
+  #kicker{font-family:'Heebo';font-weight:800;font-size:22px;letter-spacing:6px;color:var(--red);
+    display:flex;align-items:center;gap:14px;justify-content:flex-start}
+  #kicker i{display:block;height:3px;background:var(--red);box-shadow:0 0 12px var(--red-glow)}
+  #date{direction:ltr;text-align:right;font-family:'Oswald';font-weight:700;font-size:150px;line-height:150px;
+    color:var(--ink);margin-top:14px;letter-spacing:2px;text-shadow:0 6px 30px rgba(0,0,0,.8);height:150px;overflow:hidden;white-space:nowrap}
+  #date .d{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 12%,#000 88%,transparent 100%);display:inline-block;width:.56em;text-align:center;position:relative;height:150px;overflow:hidden;vertical-align:top}
+  #date .d span{position:absolute;left:0;right:0;top:0}
+  #date .sep{display:inline-block;width:.28em;text-align:center;color:var(--red)}
+  #rule{height:2px;background:linear-gradient(to left,var(--ink),rgba(239,232,218,0));margin:18px 0 22px auto}
+  .row{display:flex;align-items:center;gap:18px;justify-content:flex-start;font-family:'Heebo';font-weight:800;
+    font-size:50px;color:var(--ink);height:70px}
+  .row svg{flex:none}
+  .row .tag{font-family:'Oswald';font-weight:500;font-size:34px;color:var(--ink-dim);direction:ltr}
+
+  /* street callout */
+  #street{font-family:'Heebo';font-weight:900;font-size:58px;color:var(--ink);white-space:nowrap;
+    padding:10px 26px 14px;background:var(--panel);border-right:6px solid var(--red);
+    box-shadow:0 10px 40px rgba(0,0,0,.6)}
+  #street small{display:block;font-weight:400;font-size:22px;color:var(--ink-dim);letter-spacing:4px}
+  #coords{font-family:'Special Elite';font-size:32px;color:#e2372c;direction:ltr;letter-spacing:2px;
+    text-shadow:0 0 12px rgba(226,55,44,.5);white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="map" width="1920" height="1080"></canvas>
+  <canvas id="fx" width="1920" height="1080"></canvas>
+
+  <div id="pinLabel" class="abs">תל אביב<small>ישראל</small></div>
+
+  <div id="panel" class="abs">
+    <div id="kicker"><span>התיק מתחיל</span><i id="kline"></i></div>
+    <div id="date"></div>
+    <div id="rule"></div>
+    <div class="row" id="rowDay">
+      <svg width="46" height="46" viewBox="0 0 46 46"><rect x="4" y="8" width="38" height="34" rx="4" fill="none" stroke="#efe8da" stroke-width="3"/><path d="M4 18h38" stroke="#efe8da" stroke-width="3"/><path d="M14 3v10M32 3v10" stroke="#efe8da" stroke-width="3" stroke-linecap="round"/><rect x="26" y="25" width="9" height="9" fill="#e2372c"/></svg>
+      <span>יום חמישי</span>
+    </div>
+    <div class="row" id="rowTime">
+      <svg width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="23" r="19" fill="none" stroke="#efe8da" stroke-width="3"/>
+        <line id="hHour" x1="23" y1="23" x2="23" y2="12" stroke="#efe8da" stroke-width="3.5" stroke-linecap="round"/>
+        <line id="hMin" x1="23" y1="23" x2="23" y2="7" stroke="#e2372c" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="23" cy="23" r="2.5" fill="#efe8da"/></svg>
+      <span>צהריים</span><span class="tag" id="clockTxt">12:30</span>
+    </div>
+  </div>
+
+  <div id="street" class="abs">רחוב יהודה הלוי<small>תל אביב</small></div>
+  <div id="coords" class="abs"></div>
+
+  <canvas id="grain" width="960" height="540" style="width:1920px;height:1080px"></canvas>
+</div>
+
+<script src="land.js"></script>
+<script>
+const W=1920,H=1080, D2R=Math.PI/180;
+const TA={lon:34.7745, lat:32.0640};          // Yehuda HaLevi St. area, Tel Aviv
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const eOut=t=>1-Math.pow(1-clamp(t),3);
+const eIn=t=>Math.pow(clamp(t),3);
+const eIO=t=>{t=clamp(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+const eBack=t=>{t=clamp(t);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)};
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+
+// Mercator in "degrees"
+const mY=lat=>Math.log(Math.tan(Math.PI/4+lat*D2R/2))/D2R;
+
+// ---------- textures (seeded, deterministic) ----------
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function noiseCanvas(w,h,seed,amp){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');
+  const im=g.createImageData(w,h),r=rng(seed);for(let i=0;i<w*h;i++){const v=128+(r()-.5)*amp;im.data[i*4]=im.data[i*4+1]=im.data[i*4+2]=v;im.data[i*4+3]=255}
+  g.putImageData(im,0,0);return c}
+// paper/rock texture for land: blurred multi-octave noise
+const landTex=(()=>{const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+  g.fillStyle='#808080';g.fillRect(0,0,W,H);
+  [[240,135,1,.9],[480,270,2,.6],[960,540,3,.45]].forEach(([w,h,s,a])=>{g.globalAlpha=a;g.imageSmoothingEnabled=true;g.drawImage(noiseCanvas(w,h,s,120),0,0,W,H)});
+  g.globalAlpha=1;return c})();
+const grains=[...Array(8)].map((_,i)=>noiseCanvas(960,540,100+i,255));
+
+// ---------- camera ----------
+function camera(t){
+  // log-span zoom: settle-in, slow drift, then decisive push toward the street
+  const ls = Math.log(26)
+    - 1.05*eOut(t/1.6)
+    - 0.55*(t/6)
+    - 1.95*eIO(seg(t,4.35,6.0));
+  const span=Math.exp(ls);                       // degrees of longitude across the frame
+  // screen position of the anchor (Tel Aviv)
+  const ax=lerp(lerp(1040,760,eIO(seg(t,0,4.2))),900,eIO(seg(t,4.35,6)));
+  const ay=lerp(560,600,eIO(seg(t,0,6)));
+  return {span,ax,ay,k:W/span};
+}
+function project(cam,lon,lat){return[cam.ax+(lon-TA.lon)*cam.k, cam.ay-(mY(lat)-mY(TA.lat))*cam.k]}
+
+// ---------- draw map ----------
+const mc=document.getElementById('map').getContext('2d');
+function landPath(cam){
+  const p=new Path2D();
+  for(const ring of LAND){
+    // quick cull
+    let minx=1e9,maxx=-1e9,miny=1e9,maxy=-1e9;const pts=[];
+    for(const [lo,la] of ring){const [x,y]=project(cam,lo,la);pts.push(x,y);if(x<minx)minx=x;if(x>maxx)maxx=x;if(y<miny)miny=y;if(y>maxy)maxy=y}
+    if(maxx<-50||minx>W+50||maxy<-50||miny>H+50)continue;
+    p.moveTo(pts[0],pts[1]);for(let i=2;i<pts.length;i+=2)p.lineTo(pts[i],pts[i+1]);p.closePath();
+  }
+  return p;
+}
+function drawMap(t,cam){
+  const g=mc;
+  // sea
+  const sea=g.createRadialGradient(cam.ax,cam.ay,50,cam.ax,cam.ay,1400);
+  sea.addColorStop(0,'#101820');sea.addColorStop(1,'#06090c');
+  g.fillStyle=sea;g.fillRect(0,0,W,H);
+  // graticule (fades as we zoom)
+  const step = cam.span>8?2:cam.span>2.5?1:cam.span>.9?.25:.1;
+  g.save();g.strokeStyle='rgba(120,150,170,.075)';g.lineWidth=1;g.setLineDash([2,6]);
+  const lon0=TA.lon-(cam.ax/cam.k), lon1=TA.lon+((W-cam.ax)/cam.k);
+  for(let lo=Math.floor(lon0/step)*step;lo<=lon1;lo+=step){const x=cam.ax+(lo-TA.lon)*cam.k;g.beginPath();g.moveTo(x,0);g.lineTo(x,H);g.stroke()}
+  const yTop=mY(TA.lat)+cam.ay/cam.k, yBot=mY(TA.lat)-(H-cam.ay)/cam.k;
+  for(let la=-80;la<=80;la+=step){const my=mY(la);if(my<yBot||my>yTop)continue;const y=cam.ay-(my-mY(TA.lat))*cam.k;g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()}
+  g.restore();
+
+  const lp=landPath(cam);
+  // soft drop shadow of land onto sea
+  g.save();g.shadowColor='rgba(0,0,0,.85)';g.shadowBlur=40;g.shadowOffsetY=10;g.fillStyle='#1a2027';g.fill(lp);g.restore();
+  // land base + texture
+  g.save();g.clip(lp);
+  const lg=g.createLinearGradient(0,0,W,H);lg.addColorStop(0,'#252c34');lg.addColorStop(1,'#171c22');
+  g.fillStyle=lg;g.fillRect(0,0,W,H);
+  g.globalCompositeOperation='overlay';g.globalAlpha=.55;g.drawImage(landTex,0,0);
+  g.globalCompositeOperation='source-over';g.globalAlpha=1;
+  // warm light pool around target
+  const glow=g.createRadialGradient(cam.ax,cam.ay,0,cam.ax,cam.ay,520);
+  glow.addColorStop(0,'rgba(226,55,44,.16)');glow.addColorStop(1,'rgba(226,55,44,0)');
+  g.fillStyle=glow;g.fillRect(0,0,W,H);
+  g.restore();
+  // coastline
+  g.save();g.strokeStyle='rgba(190,205,215,.55)';g.lineWidth=1.6;g.lineJoin='round';g.stroke(lp);
+  g.strokeStyle='rgba(120,170,200,.10)';g.lineWidth=9;g.stroke(lp);g.restore();
+}
+
+// ---------- FX layer: pin, rings, target brackets, vignette ----------
+const fc=document.getElementById('fx').getContext('2d');
+function drawFX(t,cam){
+  const g=fc;g.clearRect(0,0,W,H);
+  const [px,py]=[cam.ax,cam.ay];
+  const pin=eBack(seg(t,.15,.55));
+  if(pin>0){
+    // pulse rings
+    for(let i=0;i<3;i++){const ph=((t-.15)*0.8+i/3)%1;if(t<.15)break;
+      g.beginPath();g.arc(px,py,14+ph*110,0,Math.PI*2);g.strokeStyle=`rgba(226,55,44,${.55*(1-ph)})`;g.lineWidth=2;g.stroke()}
+    g.save();g.shadowColor='rgba(226,55,44,.9)';g.shadowBlur=26;
+    g.beginPath();g.arc(px,py,11*pin,0,Math.PI*2);g.fillStyle='#e2372c';g.fill();g.restore();
+    g.beginPath();g.arc(px,py,4*pin,0,Math.PI*2);g.fillStyle='#fff3ea';g.fill();
+  }
+  // target brackets tighten during the push-in
+  const b=seg(t,4.45,5.6);
+  if(b>0){const s=lerp(260,70,eOut(b)),L=26,a=clamp(b*3);
+    g.save();g.strokeStyle=`rgba(239,232,218,${.85*a})`;g.lineWidth=3;
+    [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx,sy])=>{g.beginPath();g.moveTo(px+sx*s,py+sy*(s-L));g.lineTo(px+sx*s,py+sy*s);g.lineTo(px+sx*(s-L),py+sy*s);g.stroke()});
+    g.restore();
+    // crosshair ticks
+    g.save();g.strokeStyle=`rgba(226,55,44,${.7*a})`;g.lineWidth=1.5;g.setLineDash([6,8]);
+    g.beginPath();g.moveTo(0,py);g.lineTo(px-s-20,py);g.moveTo(px+s+20,py);g.lineTo(W,py);g.moveTo(px,0);g.lineTo(px,py-s-20);g.moveTo(px,py+s+20);g.lineTo(px,H);g.stroke();g.restore();
+  }
+  // vignette + slight flicker
+  const v=g.createRadialGradient(W/2,H/2,H*.35,W/2,H/2,H*1.05);
+  v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.78)');
+  g.fillStyle=v;g.fillRect(0,0,W,H);
+  const fl=.035*Math.sin(t*37)+.02*Math.sin(t*91);
+  g.fillStyle=`rgba(0,0,0,${.05+fl})`;g.fillRect(0,0,W,H);
+  // fade from black
+  const fin=1-eOut(seg(t,0,.45));if(fin>0){g.fillStyle=`rgba(0,0,0,${fin})`;g.fillRect(0,0,W,H)}
+}
+
+// ---------- DOM overlays ----------
+const $=id=>document.getElementById(id);
+const DATE='11.12.2003';
+$('date').innerHTML=[...DATE].map((ch,i)=>ch==='.'?`<span class="sep">.</span>`:`<span class="d" data-i="${i}" data-v="${ch}"><span></span></span>`).join('');
+const digits=[...document.querySelectorAll('#date .d')];
+function reveal(el,p,dx=0,dy=24){el.style.opacity=clamp(p*1.4);el.style.transform=`translate(${(1-p)*dx}px,${(1-p)*dy}px)`;
+  el.style.clipPath=`inset(0 0 ${(1-p)*100}% 0)`}
+function drawDOM(t,cam){
+  // pin label follows the pin
+  const pl=$('pinLabel'),lp=eOut(seg(t,.2,.75)),out=1-eIO(seg(t,4.3,4.8));
+  pl.style.left=(cam.ax+34)+'px';pl.style.top=(cam.ay-40)+'px';pl.style.direction='rtl';
+  pl.style.opacity=clamp(lp*1.3)*out;pl.style.clipPath=`inset(0 ${(1-lp)*100}% 0 0)`;
+  pl.style.transform=`translateX(${(1-lp)*-20}px)`;
+
+  // panel exits during the push-in
+  const pout=eIn(seg(t,4.35,4.95));
+  $('panel').style.opacity=1-pout;$('panel').style.transform=`translateX(${pout*80}px)`;
+  // kicker
+  const kp=eOut(seg(t,.55,1.1));$('kicker').style.opacity=kp;$('kline').style.width=(kp*120)+'px';
+  // date odometer: each digit rolls then locks, staggered (spoken 0.7s–2.5s)
+  digits.forEach((d,j)=>{const lockAt=1.0+j*.2, st=.65+j*.12, v=+d.dataset.v, sp=d.firstChild;
+    const p=seg(t,st,lockAt);
+    if(t<st){d.style.opacity=0;return}
+    d.style.opacity=clamp((t-st)*6);
+    // roll through digits, ease into final value
+    const turns=2+j%3, pos=eOut(p)*(turns*10+v);
+    const cur=Math.floor(pos)%10, frac=pos-Math.floor(pos);
+    const nxt=(cur+1)%10;
+    sp.innerHTML=`<div style="transform:translateY(${-frac*150}px)"><div style="height:150px">${cur}</div><div style="height:150px">${nxt}</div></div>`;
+    if(p>=1)sp.innerHTML=`<div><div style="height:150px">${v}</div></div>`;
+  });
+  document.querySelectorAll('#date .sep').forEach((s,i)=>{s.style.opacity=clamp((t-.9-i*.5)*4)});
+  $('rule').style.width=(eOut(seg(t,2.2,2.9))*700)+'px';
+  // rows
+  reveal($('rowDay'),eOut(seg(t,2.95,3.35)),30,0);
+  reveal($('rowTime'),eOut(seg(t,3.6,4.0)),30,0);
+  // clock hands spin to 12:30
+  const cp=eOut(seg(t,3.6,4.3));
+  const minA=cp*(360*2+180), hrA=cp*(15);
+  $('hMin').setAttribute('transform',`rotate(${minA} 23 23)`);$('hHour').setAttribute('transform',`rotate(${hrA} 23 23)`);
+  const mm=Math.round((minA%360)/6)%60;$('clockTxt').textContent='12:'+String(cp>=1?30:mm).padStart(2,'0');
+
+  // street callout on "רחוב יהודה הלוי" (≈4.5s)
+  const sp=eBack(seg(t,4.55,5.05));const st=$('street');
+  st.style.left=(cam.ax-560)+'px';st.style.top=(cam.ay-190)+'px';
+  st.style.opacity=clamp(seg(t,4.55,4.8));
+  const co=$('coords'),full='32.0640°N  34.7745°E',n=Math.floor(clamp(seg(t,4.9,5.7))*full.length);
+  co.textContent=full.slice(0,n)+(n<full.length&&n>0&&Math.floor(t*8)%2?'_':'');
+  co.style.left=(cam.ax+110)+'px';co.style.top=(cam.ay+95)+'px';st.style.transform=`scale(${lerp(.85,1,sp)})`;st.style.transformOrigin='100% 100%';
+}
+
+// ---------- grain ----------
+const gc=$('grain').getContext('2d');
+function drawGrain(f){gc.drawImage(grains[f%grains.length],0,0)}
+
+window.renderAt=(t)=>{const cam=camera(t);drawMap(t,cam);drawFX(t,cam);drawDOM(t,cam);drawGrain(Math.floor(t*24));};
+window.ready=document.fonts.ready.then(()=>{renderAt(0);return true});
+// live preview when opened in a browser
+if(!/render=1/.test(location.search)){let t0=null;const loop=ts=>{if(t0===null)t0=ts;renderAt(((ts-t0)/1000)%6.5);requestAnimationFrame(loop)};requestAnimationFrame(loop)}
+</script>
+</body>
+</html>
